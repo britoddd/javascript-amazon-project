@@ -29,7 +29,7 @@ products.forEach((product, i) => {
       </div>
 
       <div class="product-quantity-container">
-        <select>
+        <select class="js-quantity-selector-${product.id} quantity-selector">
           <option selected value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -77,9 +77,18 @@ products.forEach((product, i) => {
       } else {
         cart.push({
           productId: productId,
-          quantity: 1,
+          quantity: Number(
+            document.querySelector(`.js-quantity-selector-${productId}`).value
+          ),
         });
       }
+
+      document.querySelector(
+        `.js-quantity-selector-${productId}`
+      ).selectedIndex = 0;
+
+      // * work the same
+      // document.querySelector(".quantity-selector").selected = "1";
 
       // ! THIS CODE WILL NOT WORK
       // * soale forEach ini loop ga dirancang buat jalan ketika ada hal yang berubah di pedoman iterasinya
