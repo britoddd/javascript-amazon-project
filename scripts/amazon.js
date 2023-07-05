@@ -1,96 +1,100 @@
-const products = [
-  {
-    image: "images/products/athletic-cotton-socks-6-pairs.jpg",
-    name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
-    rating: {
-      stars: 4.5,
-      count: 87,
-    },
-    price: 1090, // saved in cents
-  },
-
-  {
-    image: "images/products/intermediate-composite-basketball.jpg",
-    name: "Intermediate Size Basketball",
-    rating: {
-      stars: 4,
-      count: 127,
-    },
-    price: 2095,
-  },
-
-  {
-    image: "images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg",
-    name: "Adults Plain Cotton T-Shirt - 2 Pack",
-    rating: {
-      stars: 4.5,
-      count: 56,
-    },
-    price: 799,
-  },
-];
-
 products.forEach((product, i) => {
+  const { image } = product;
+  const { name } = product;
+  const finalStars = product.rating.stars * 10;
+  const { count } = product.rating;
+  const finalPrice = product.priceCents / 100;
+
   const html = `
-  <div class="product-container">
-  <div class="product-image-container">
-    <img class="product-image"
-      src="images/products/athletic-cotton-socks-6-pairs.jpg">
+    <div class="product-container">
+      <div class="product-image-container">
+        <img class="product-image"
+          src="${image}">
+      </div>
+
+      <div class="product-name limit-text-to-2-lines">
+        ${name}
+      </div>
+
+      <div class="product-rating-container">
+        <img class="product-rating-stars"
+          src="images/ratings/rating-${finalStars}.png">
+        <div class="product-rating-count link-primary">
+          ${count}
+        </div>
+      </div>
+
+      <div class="product-price">
+        $${finalPrice.toFixed(2)}
+      </div>
+
+      <div class="product-quantity-container">
+        <select>
+          <option selected value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+      </div>
+
+      <div class="product-spacer"></div>
+
+      <div class="added-to-cart">
+        <img src="images/icons/checkmark.png">
+        Added
+      </div>
+
+    <button class="add-to-cart-button button-primary js-add-to-cart" data-product-name="${name}">
+      Add to Cart
+    </button>
   </div>
+  `;
 
-  <div class="product-name limit-text-to-2-lines">
-    Black and Gray Athletic Cotton Socks - 6 Pairs
-  </div>
+  document.querySelector(".products-grid").innerHTML += html;
 
-  <div class="product-rating-container">
-    <img class="product-rating-stars"
-      src="images/ratings/rating-45.png">
-    <div class="product-rating-count link-primary">
-      87
-    </div>
-  </div>
+  document.querySelectorAll(".js-add-to-cart").forEach((addToCartButton) => {
+    addToCartButton.addEventListener("click", () => {
+      const productName = addToCartButton.dataset.productName;
 
-  <div class="product-price">
-    $10.90
-  </div>
+      let matchingItem;
 
-  <div class="product-quantity-container">
-    <select>
-      <option selected value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-      <option value="6">6</option>
-      <option value="7">7</option>
-      <option value="8">8</option>
-      <option value="9">9</option>
-      <option value="10">10</option>
-    </select>
-  </div>
+      cart.forEach((item) => {
+        if (item.name === productName) {
+          matchingItem = item;
+        }
+      });
 
-  <div class="product-spacer"></div>
+      if (matchingItem) {
+        matchingItem.quantity += 1;
+      } else {
+        cart.push({
+          name: productName,
+          quantity: 1,
+        });
+      }
 
-  <div class="added-to-cart">
-    <img src="images/icons/checkmark.png">
-    Added
-  </div>
+      // ! THIS CODE WILL NOT WORK
+      // * soale forEach ini loop ga dirancang buat jalan ketika ada hal yang berubah di pedoman iterasinya
+      /*
+        cart.forEach((item) => {
+        if (item.name === productName) {
+          matchingItem.quantity += 1;
+        } else {
+          cart.push({
+            name: productName,
+            quantity: 1,
+          });
+        }
+      }); 
+      */
 
-  <button class="add-to-cart-button button-primary">
-    Add to Cart
-  </button>
-</div>
-`;
-  const product = product[i];
-  const { image } = product[i];
-  const { name } = product[i];
-  const { stars } = product[i].rating;
-  const { count } = product[i].rating;
-  const { price } = product[i];
+      console.log(cart);
+    });
+  });
 });
-
-for (let i = 0; i < products.length; i++) {
-  console.log(element);
-
-  document.querySelector(".product-name").innerHTML = "name";
-}
